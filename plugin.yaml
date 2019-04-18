@@ -1,0 +1,14 @@
+node_types:
+  cloudify.example.Example:
+    derived_from: cloudify.nodes.Root
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        start:
+          implementation: example.example_package.tasks.write_to_file # example - name of plugin at the line 10, example_package - packages in setup.py
+
+plugins:
+  example:
+    executor: central_deployment_agent
+    package_name: 'cloudify-plugin-example'
+    source: cloudify-plugin-example
+    package_version: '0.0.1'
