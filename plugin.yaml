@@ -6,9 +6,20 @@ node_types:
         start:
           implementation: example.example_package.tasks.write_to_file # example - name of plugin at the line 10, example_package - packages in setup.py
 
+  cloudify.example.tick:
+    derived_from: cloudify.nodes.ApplicationServer
+    interfaces:
+      foo:
+        bar:
+          inputs:
+          implementation: example.example_package.tasks.tick
+          inputs:
+            test_time:
+              default: 30
+
 plugins:
   example:
     executor: central_deployment_agent
     package_name: 'cloudify-plugin-example'
     source: cloudify-plugin-example
-    package_version: '0.0.1'
+    package_version: '0.0.2'
