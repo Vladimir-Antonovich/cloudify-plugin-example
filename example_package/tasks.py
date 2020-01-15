@@ -15,7 +15,14 @@ def tick(ctx, **kwargs):
     test_time = int(inputs.get('test_time', 30))
     end_time = datetime.now() + timedelta(0,test_time)
     while True:
-        ctx.logger.info("test_func: {}".format(datetime.now()))
+        current_data = datetime.now()
+        ctx.logger.info("test_func: {}".format(current_data))
+        if ctx.instance.runtime_properties.get('data'):
+            ctx.logger.info("runtime test_func: {}".format(ctx.instance.runtime_properties.get('data')))
+        else:
+            ctx.logger.info("There is no runtime data")
+        ctx.instance.runtime_properties['data'] = current_data
+        ctx.instance.update()
         if datetime.now() >= end_time:
             return
         sleep(1)
