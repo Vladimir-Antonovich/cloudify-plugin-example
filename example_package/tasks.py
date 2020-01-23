@@ -11,6 +11,39 @@ def write_to_file(*args, **kwargs):
         f.write('This simple example gives you the power to do amazing things.\n')
 
 @operation(resumable=True)
+def tick_true(ctx, **kwargs):
+    test_time = int(inputs.get('test_time', 30))
+    end_time = datetime.now() + timedelta(0,test_time)
+    while True:
+        current_data = str(datetime.now())
+        ctx.logger.info("test_func: {}".format(current_data))
+        if ctx.instance.runtime_properties.get('data'):
+            ctx.logger.info("runtime test_func: {}".format(ctx.instance.runtime_properties.get('data')))
+        else:
+            ctx.logger.info("There is no runtime data")
+        ctx.instance.runtime_properties['data'] = current_data
+        ctx.instance.update()
+        if datetime.now() >= end_time:
+            return
+        sleep(1)
+
+@operation(resumable=False)
+def tick_false(ctx, **kwargs):
+    test_time = int(inputs.get('test_time', 30))
+    end_time = datetime.now() + timedelta(0,test_time)
+    while True:
+        current_data = str(datetime.now())
+        ctx.logger.info("test_func: {}".format(current_data))
+        if ctx.instance.runtime_properties.get('data'):
+            ctx.logger.info("runtime test_func: {}".format(ctx.instance.runtime_properties.get('data')))
+        else:
+            ctx.logger.info("There is no runtime data")
+        ctx.instance.runtime_properties['data'] = current_data
+        ctx.instance.update()
+        if datetime.now() >= end_time:
+            return
+        sleep(1)
+
 def tick(ctx, **kwargs):
     test_time = int(inputs.get('test_time', 30))
     end_time = datetime.now() + timedelta(0,test_time)

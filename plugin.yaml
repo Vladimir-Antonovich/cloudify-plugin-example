@@ -17,6 +17,30 @@ node_types:
             test_time:
               default: 30
 
+
+  cloudify.example.tick_true:
+    derived_from: cloudify.nodes.ApplicationServer
+    interfaces:
+      foo:
+        bar:
+          inputs:
+          implementation: example.example_package.tasks.tick_true
+          inputs:
+            test_time:
+              default: 30
+
+
+  cloudify.example.tick_false:
+    derived_from: cloudify.nodes.ApplicationServer
+    interfaces:
+      foo:
+        bar:
+          inputs:
+          implementation: example.example_package.tasks.tick_false
+          inputs:
+            test_time:
+              default: 30
+
 plugins:
   example:
     executor: central_deployment_agent
